@@ -1,0 +1,38 @@
+name: Run Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        php: ['8.2', '8.3']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Run Pint (Code Linter)
+        run: vendor/bin/pint --test
+
+      - name: Run Rector (Code Improvements)
+        run: vendor/bin/rector process --dry-run
+
+      - name: Run Tests (PHPUnit/Pest)
+        run: |
+          if [ -f vendor/bin/pest ]; then
+            vendor/bin/pest
+          else
+            vendor/bin/phpunit
+          fi

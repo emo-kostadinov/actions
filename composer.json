@@ -1,0 +1,25 @@
+{
+    "name": "emil/actions",
+    "autoload": {
+        "psr-4": {
+            "Emil\\Actions\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "emo-kostadinov",
+            "email": "emilgold06@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "pestphp/pest": "^3.8",
+        "laravel/pint": "^1.22",
+        "rector/rector": "^2.0",
+        "phpunit/phpunit": "^11.5"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
